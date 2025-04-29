@@ -1,0 +1,33 @@
+import mensajeros.*
+import mensajeria.*
+import destinos.*
+
+describe "test segunda parte"{
+
+    method initialize(){
+        empresaMensajeria.contratarMensajero(neo)
+    }
+    test "neo esta contratado"{
+        assert.that(empresaMensajeria.mensajeros().contains(neo))
+    }
+    test "neo fue despedidio, ya no esta contratado"{
+        empresaMensajeria.despedirMensajero(neo)
+        assert.notThat(empresaMensajeria.mensajeros().contains(neo))
+    }
+    test "solo con neo la mensajeria no es grande"{
+        assert.notThat(empresaMensajeria.esGrande())
+    }
+    test "si agrego a roberto y chuckNorris, ahora es grando"{
+        empresaMensajeria.contratarMensajero(roberto)
+        empresaMensajeria.contratarMensajero(chuckNorris)
+        assert.that(empresaMensajeria.esGrande())
+    }
+    test "neo puede entregar el paquete"{
+        paquete.pagar()
+        assert.that(empresaMensajeria.puedeSerEntregadoPorPrimerEmpleado())
+    }
+    test "el peso de roberto es 95"{
+        empresaMensajeria.contratarMensajero(roberto)
+        assert.equals(95, empresaMensajeria.pesoUltimoMensajero())
+    }
+}
