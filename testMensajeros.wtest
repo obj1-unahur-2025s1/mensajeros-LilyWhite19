@@ -31,3 +31,64 @@ describe "test segunda parte"{
         assert.equals(95, empresaMensajeria.pesoUltimoMensajero())
     }
 }
+
+describe "test tercera Parte"{
+
+    method initialize(){
+        empresaMensajeria.contratarMensajero(roberto)
+        empresaMensajeria.contratarMensajero(chuckNorris)
+        paquete.pagar()
+     }
+
+    test "Hay al menos un mensajero en la empresa que puede entregar un paquete"{
+        assert.that(empresaMensajeria.puedeEntregarse(paquete))
+    }
+    test "Solo Chuck Norris puede entregar el paquete"{
+        assert.equals([chuckNorris], empresaMensajeria.losQuePuedeEntregar(paquete))
+    }
+    test "La mensajeria no tiene sobrepeso"{
+        assert.notThat(empresaMensajeria.tieneSobrePeso())
+    }
+    test "Nadie puede entregar el paqueton y se guarda en la lista de los paquetes pendientes"{
+        paqueton.agregarDestino(puenteBrooklyn)
+        empresaMensajeria.enviar(paqueton)
+        assert.equals([paqueton], empresaMensajeria.paquetesPendientes())
+    }
+    test "La facturacion de la mensajeria es 250"{
+        paqueton.agregarDestino(laMatrix)
+        paqueton.agregarDestino(puenteBrooklyn)
+        paqueton.pagar(200)
+        empresaMensajeria.enviar(paqueton)
+        empresaMensajeria.enviar(paquete)
+        assert.equals(250, empresaMensajeria.facturacion())
+        }
+    test "La mensajeria pudo enviar a paquete, paquetito y paqueton"{
+        paqueton.agregarDestino(puenteBrooklyn)
+        paqueton.pagar(100)
+        empresaMensajeria.enviarPaquetes([paquete, paquetito, paqueton])
+        assert.equals([paquete, paquetito, paqueton], empresaMensajeria.paquetesEnviados())
+    }
+    test "Paqueton ahora puede ser enviado por la mensajeria y sale de los paquetes pendientes"{
+        paqueton.agregarDestino(puenteBrooklyn)
+        empresaMensajeria.enviar(paqueton)
+        assert.equals([paqueton], empresaMensajeria.paquetesPendientes())
+        empresaMensajeria.paquetesPendientes().first().pagar(100)
+        empresaMensajeria.enviarPendienteMasCaro()
+        assert.equals([], empresaMensajeria.paquetesPendientes())
+    }
+    test "Pedro Picapiedra es contratado por la mensajeria"{
+        empresaMensajeria.contratarMensajero(pedroPicaPiedra)
+        assert.equals([roberto, chuckNorris, pedroPicaPiedra], 
+        empresaMensajeria.mensajeros())
+    }
+    test "Chuck Norris se va de la empresa y la mensajeria contrata a Neo para entregar el 
+    paquete especial que se encontaba en los paquetes pendientes"{
+        empresaMensajeria.despedirMensajero(chuckNorris)
+        empresaMensajeria.enviar(paqueteEspecial)
+        assert.equals([paqueteEspecial], empresaMensajeria.paquetesPendientes())
+        empresaMensajeria.contratarMensajero(neo)
+        empresaMensajeria.paquetesPendientes().first().pagar(700)
+        empresaMensajeria.enviarPendienteMasCaro()
+        assert.equals([], empresaMensajeria.paquetesPendientes())
+    }
+}

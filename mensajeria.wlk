@@ -4,6 +4,8 @@ object empresaMensajeria{
     const mensajeros = []
     const paquetesPendientes = []
     const paquetesEnviados = []
+    method paquetesPendientes() = paquetesPendientes
+    method paquetesEnviados() = paquetesEnviados
     method mensajeros() = mensajeros
     method contratarMensajero(unMensajero) {
         mensajeros.add(unMensajero)
@@ -14,7 +16,7 @@ object empresaMensajeria{
     method esGrande() = mensajeros.size() > 2
 
     method puedeSerEntregadoPorPrimerEmpleado() = 
-        paquete.puedeLlegarADestino(mensajeros.fist())
+        paquete.puedeLlegarADestino(mensajeros.first())
     method pesoUltimoMensajero(){
         return mensajeros.last().peso()
     }
@@ -49,17 +51,14 @@ object empresaMensajeria{
         listaDePaquetes.forEach({p => self.enviar(p)})
     }
     method enviarPendienteMasCaro(){
-        if (self.paquetePendienteMasCaro().puedeLlegarADestino(self.paquetePendienteMasCaro())){
+        if (self.paquetePendienteMasCaro().puedeLlegarADestino(self.losQuePuedeEntregar(self.paquetePendienteMasCaro()).first())){
             self.enviar(self.paquetePendienteMasCaro())
             paquetesPendientes.remove(self.paquetePendienteMasCaro())
-        }
-        else{
-            
         }
 
     }
     method paquetePendienteMasCaro(){
         return
-        paquetesPendientes.max({p => p.precioTotal})
+        paquetesPendientes.max({p => p.precioTotal()})
     }
 }

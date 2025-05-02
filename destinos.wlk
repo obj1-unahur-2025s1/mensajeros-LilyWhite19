@@ -1,10 +1,10 @@
 object puenteBrooklyn {
-    method dejaPasar(unMensajero){
+    method dejarPasar(unMensajero){
         return unMensajero.peso() < 1000
     }
 }
 object laMatrix {
-  method dejaPasar(unMensajero){
-        return unMensajero.PuedeLlamar()
+  method dejarPasar(unMensajero){
+        return unMensajero.puedeLlamar()
   }
 }
